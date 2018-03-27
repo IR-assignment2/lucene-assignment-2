@@ -32,10 +32,10 @@ public class CranConfig {
 //        analyzer = new WhitespaceAnalyzer();
 //        analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
         analyzer = new EnglishAnalyzer();
-         index = new SimpleFSDirectory(Paths.get(indexPath));
-//        index = new SimpleFSDirectory(Paths.get());
+        index = new SimpleFSDirectory(Paths.get(indexPath));
 //        index = new RAMDirectory();
         config = new IndexWriterConfig(analyzer);
+//        config.setRAMBufferSizeMB(50.);
 //        similarity = new ClassicSimilarity();
         similarity = new MultiSimilarity(new Similarity[] {new BM25Similarity(), new ClassicSimilarity()});
 //        similarity = new BM25Similarity();

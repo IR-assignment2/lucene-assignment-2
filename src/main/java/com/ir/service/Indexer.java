@@ -30,7 +30,7 @@ public class Indexer {
     public static void addDocToIndex(NewsModel newsModel, IndexWriter writer) throws IOException {
         if (!writer.isOpen()) throw new IOException("writer closed");
         Document document = new Document();
-        document.add(new StoredField("doc_no", newsModel.getDocNo()));
+        document.add(new StoredField("id", newsModel.getDocNo()));
         document.add(new TextField("title", newsModel.getTitle() != null ? newsModel.getTitle() : "null value for title", Field.Store.YES));
         document.add(new TextField("content", newsModel.getContent() != null ? newsModel.getContent() : "null value for content", Field.Store.YES));
         writer.addDocument(document);

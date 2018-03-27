@@ -6,10 +6,6 @@ import com.ir.config.CranConfig;
 import com.ir.model.*;
 import org.apache.lucene.index.IndexWriter;
 
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
 import java.io.*;
 import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;
@@ -19,18 +15,20 @@ import java.util.List;
 
 public class CranReader {
 
-    public static void readAndIndex(CranConfig config) throws IOException {
+    public static void readAndIndex(CranConfig config, String... inputFiles) throws IOException {
 
         ClassLoader classLoader = MethodHandles.lookup().lookupClass().getClassLoader();
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String[] jsonFiles = new String[] {
-                classLoader.getResource("fbis_parsed.json").getPath(),
-                classLoader.getResource("fr94_parsed.json").getPath(),
-                classLoader.getResource("ft_parsed.json").getPath(),
-                classLoader.getResource("latimes_parsed.json").getPath(),
-        };
-//
+        String[] jsonFiles = inputFiles;
+
+//        String[] jsonFiles = new String[] {
+//                classLoader.getResource("input/fbis_parsed.json").getPath(),
+//                classLoader.getResource("input/fr94_parsed.json").getPath(),
+//                classLoader.getResource("input/ft_parsed.json").getPath(),
+//                classLoader.getResource("input/latimes_parsed.json").getPath(),
+//        };
+
 //        String[] jsonFiles = new String[] {
 //                "/Users/apple/projects/CS7IS3-information-retrieval/assginment2/luceneassignment2/src/main/resources/fbis_parsed.json",
 //                "/Users/apple/projects/CS7IS3-information-retrieval/assginment2/luceneassignment2/src/main/resources/fr94_parsed.json",
@@ -40,9 +38,10 @@ public class CranReader {
 
         IndexWriter writer = Indexer.getWriter(config);
 
-        for (int i=0; i<jsonFiles.length; i++) {
-            String doc = new String(Files.readAllBytes(Paths.get(jsonFiles[i])));
-            List<NewsModel> data = objectMapper.readValue(doc, new TypeReference<List<NewsModel>>(){});
+        for (String jsonFile : jsonFiles) {
+            String doc = new String(Files.readAllBytes(Paths.get(jsonFile)));
+            List<NewsModel> data = objectMapper.readValue(doc, new TypeReference<List<NewsModel>>() {
+            });
 
             for (NewsModel newsModel : data) {
                 Indexer.addDocToIndex(newsModel, writer);

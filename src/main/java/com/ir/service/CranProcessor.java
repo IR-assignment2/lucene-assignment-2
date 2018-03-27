@@ -2,6 +2,7 @@ package com.ir.service;
 
 import com.ir.config.CranConfig;
 import com.ir.model.CranQuery;
+import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexableField;
@@ -25,7 +26,7 @@ import static org.apache.lucene.util.IOUtils.UTF_8;
 
 public class CranProcessor {
 
-    private static final int HITS_PER_PAGE = 30;
+    private static final int HITS_PER_PAGE = 1000;
 
     public static void processQueries(String readFile, String outputFile, CranConfig config) throws IOException, ParseException {
         List<CranQuery> queryList = CranReader.readQueries(readFile, config);
@@ -58,10 +59,14 @@ public class CranProcessor {
             // float hitMax = Arrays.stream(hits).map(hit -> hit.score).max(Comparator.naturalOrder()).get();
             for (int i=0; i< hits.length; i++) {
                 // int normalized = (int)((hits[i].score / hitMax) * 5f);
-                String out = String.format(cranQuery.getId() + " Q0 %s %s " + hits[i].score + " default", (hits[i].doc + 1), i+1);
+                Document doc = searcher.doc(hits[i].doc);
+                String num = doc.get("id");
+                String out = String.format(cranQuery.getQueryId() + " Q0 %s %s " + hits[i].score + " default", num, i+1);
                 Files.write(path, (out + System.lineSeparator()).getBytes(UTF_8), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             }
         }
+
+        System.out.println("output written to " + path);
     }
 
     /*
