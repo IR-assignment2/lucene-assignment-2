@@ -40,10 +40,9 @@ public class CranProcessor {
                 .map(IndexableField::name)
                 .collect(Collectors.toList());
 
-//        Map<String, Float> boosts = new HashMap<>();
-//        boosts.put("source", 0.01f);
-//        boosts.put("author", 0.1f);
-//        boosts.put("text", 10f);
+        Map<String, Float> boosts = new HashMap<>();
+        boosts.put("title", 0.01f);
+        boosts.put("content", 10f);
 
         searcher.setSimilarity(config.getSimilarity());
 
@@ -52,7 +51,8 @@ public class CranProcessor {
         Files.write(path, "".getBytes());
 
         for (CranQuery cranQuery: queryList) {
-            MultiFieldQueryParser parser = new MultiFieldQueryParser(fields.toArray(new String[0]), config.getAnalyzer());
+            System.out.println("Query: " + cranQuery.getQuery());
+            MultiFieldQueryParser parser = new MultiFieldQueryParser(new String[] {"title", "content"}, config.getAnalyzer(), boosts);
             Query query = parser.parse(cranQuery.getQuery());
             TopDocs results = searcher.search(query, HITS_PER_PAGE);
             ScoreDoc[] hits = results.scoreDocs;

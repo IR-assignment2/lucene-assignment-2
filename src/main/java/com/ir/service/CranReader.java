@@ -62,30 +62,39 @@ public class CranReader {
         try (BufferedReader br = new BufferedReader(
                 (new InputStreamReader(classLoader.getResourceAsStream(file))))) {
 
-            CranQuery cqr = null;
-            StringBuilder stringBuilder = null;
+            CranQuery cqr;
+//            StringBuilder stringBuilder = null;
 
+            int queryId = 401;
             while ((line = br.readLine()) != null) {
-                if (line.startsWith(".I")) {
-                    id += 1;
-                    if (cqr != null && stringBuilder != null) {
-                        cqr.setQuery(stringBuilder.toString());
-                        cranQueries.add(cqr);
-                    }
-                    cqr = new CranQuery();
-                    int queryId = Integer.parseInt(line.replace(".I", "").trim());
-                    cqr.setId(id);
-                    cqr.setQueryId(queryId);
-                } else if (line.startsWith(".W")) {
-                    stringBuilder = new StringBuilder();
-                } else {
-                    if (stringBuilder != null) stringBuilder.append(line);
-                }
-            }
-            if (cqr != null && stringBuilder != null) {
-                cqr.setQuery(stringBuilder.toString());
+                cqr = new CranQuery();
+                cqr.setId(queryId);
+                cqr.setQueryId(queryId);
+                cqr.setQuery(line.replaceAll("/", " "));
+                queryId += 1;
                 cranQueries.add(cqr);
+//
+//
+//                if (line.startsWith(".I")) {
+//                    id += 1;
+//                    if (cqr != null && stringBuilder != null) {
+//                        cqr.setQuery(stringBuilder.toString());
+//                        cranQueries.add(cqr);
+//                    }
+//                    cqr = new CranQuery();
+//                    int queryId = Integer.parseInt(line.replace(".I", "").trim());
+//                    cqr.setId(id);
+//                    cqr.setQueryId(queryId);
+//                } else if (line.startsWith(".W")) {
+//                    stringBuilder = new StringBuilder();
+//                } else {
+//                    if (stringBuilder != null) stringBuilder.append(line);
+//                }
             }
+//            if (cqr != null && stringBuilder != null) {
+//                cqr.setQuery(stringBuilder.toString());
+//                cranQueries.add(cqr);
+//            }
         }
         return cranQueries;
     }

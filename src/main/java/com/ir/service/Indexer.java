@@ -1,5 +1,6 @@
 package com.ir.service;
 
+import com.ir.analyzers.MyTextField;
 import com.ir.config.CranConfig;
 import com.ir.model.Cran;
 import com.ir.model.NewsModel;
@@ -31,8 +32,8 @@ public class Indexer {
         if (!writer.isOpen()) throw new IOException("writer closed");
         Document document = new Document();
         document.add(new StoredField("id", newsModel.getDocNo()));
-        document.add(new TextField("title", newsModel.getTitle() != null ? newsModel.getTitle() : "null value for title", Field.Store.YES));
-        document.add(new TextField("content", newsModel.getContent() != null ? newsModel.getContent() : "null value for content", Field.Store.YES));
+        document.add(new MyTextField("title", newsModel.getTitle() != null ? newsModel.getTitle() : "null value for title"));
+        document.add(new MyTextField("content", newsModel.getContent() != null ? newsModel.getContent() : "null value for content"));
         writer.addDocument(document);
         System.out.println(newsModel.getDocNo() + " indexed.");
     }
