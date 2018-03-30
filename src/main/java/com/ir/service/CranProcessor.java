@@ -41,7 +41,7 @@ public class CranProcessor {
                 .collect(Collectors.toList());
 
         Map<String, Float> boosts = new HashMap<>();
-        boosts.put("title", 0.01f);
+        boosts.put("title", 0.5f);
         boosts.put("content", 10f);
 
         searcher.setSimilarity(config.getSimilarity());

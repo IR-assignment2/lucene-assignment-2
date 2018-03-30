@@ -8,13 +8,13 @@ To index files, move the parsed data files to src/main/resources before building
 Program arugments
 ----
 -index
-/Users/apple/projects/CS7IS3-information-retrieval/assginment2/luceneassignment2/output/index
+/Users/zen/Parsed-Docs/index
 -runindexing
-false
+true
 -out
-/Users/apple/projects/CS7IS3-information-retrieval/assginment2/luceneassignment2/output/news.out
+/Users/zen/Parsed-Docs/news.out
 -parsedfiles
-/Users/apple/projects/CS7IS3-information-retrieval/assginment2/luceneassignment2/input/fbis_parsed.json
-/Users/apple/projects/CS7IS3-information-retrieval/assginment2/luceneassignment2/input/fr94_parsed.json
-/Users/apple/projects/CS7IS3-information-retrieval/assginment2/luceneassignment2/input/ft_parsed.json
-/Users/apple/projects/CS7IS3-information-retrieval/assginment2/luceneassignment2/input/latimes_parsed.json
+/Users/zen/Parsed-Docs/fbis_parsed.json
+/Users/zen/Parsed-Docs/fr94_parsed.json
+/Users/zen/Parsed-Docs/ft_parsed.json
+/Users/zen/Parsed-Docs/latimes_parsed.json

@@ -1,0 +1,10 @@
+/Users/zen/lucene-assignment-2/src/main/java/com/ir/model/CranQuery.java
+/Users/zen/lucene-assignment-2/src/main/java/com/ir/model/CranRelevance.java
+/Users/zen/lucene-assignment-2/src/main/java/com/ir/CranApp.java
+/Users/zen/lucene-assignment-2/src/main/java/com/ir/config/CranConfig.java
+/Users/zen/lucene-assignment-2/src/main/java/com/ir/service/CranProcessor.java
+/Users/zen/lucene-assignment-2/src/main/java/com/ir/model/FinancialTimesModel.java
+/Users/zen/lucene-assignment-2/src/main/java/com/ir/model/NewsModel.java
+/Users/zen/lucene-assignment-2/src/main/java/com/ir/service/CranReader.java
+/Users/zen/lucene-assignment-2/src/main/java/com/ir/model/Cran.java
+/Users/zen/lucene-assignment-2/src/main/java/com/ir/service/Indexer.java

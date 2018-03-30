@@ -10,14 +10,17 @@ public class NewsModel {
 
     private String content;
 
+    private String date;
+
     public NewsModel() {
         super();
     }
 
-    public NewsModel(String docNo, String title, String content) {
+    public NewsModel(String docNo, String title, String content, String date) {
         this.docNo = docNo;
         this.title = title;
         this.content = content;
+        this.date = date;
     }
 
     public String getDocNo() {
@@ -42,6 +45,14 @@ public class NewsModel {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     @Override
