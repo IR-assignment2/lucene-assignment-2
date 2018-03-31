@@ -32,19 +32,9 @@ public class CranConfig {
     private Similarity similarity;
 
     private CranConfig(String indexPath) throws IOException {
-        // Try other analyzers as well Standard, Stopword, etc - in report
-//        analyzer = new WhitespaceAnalyzer();
-//        analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
-//        analyzer = new EnglishAnalyzer();
         analyzer = new MyCustomAnalyzer();
-
         index = new SimpleFSDirectory(Paths.get(indexPath));
-//        index = new RAMDirectory();
         config = new IndexWriterConfig(analyzer);
-//        config.setRAMBufferSizeMB(50.);
-//        similarity = new ClassicSimilarity();
-//        similarity = new MultiSimilarity(new Similarity[] {new BM25Similarity(), new ClassicSimilarity()});
-//        similarity = new LMDirichletSimilarity();
         similarity = new BM25Similarity();
         config.setSimilarity(similarity);
     }

@@ -35,6 +35,7 @@ public class Indexer {
         document.add(new MyTextField("title", newsModel.getTitle() != null ? newsModel.getTitle() : "null value for title"));
         document.add(new MyTextField("content", newsModel.getContent() != null ? newsModel.getContent() : "null value for content"));
         document.add(new MyTextField("date", newsModel.getDate() != null ? newsModel.getDate() : "null value for date"));
+        document.add(new MyTextField("summary", newsModel.getSummary() != null ? newsModel.getSummary() : "null value for Summary"));
         writer.addDocument(document);
         System.out.println(newsModel.getDocNo() + " indexed.");
     }

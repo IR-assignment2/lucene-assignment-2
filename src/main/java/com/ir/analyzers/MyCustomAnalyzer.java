@@ -1,8 +1,7 @@
 package com.ir.analyzers;
 
 import org.apache.lucene.analysis.*;
-import org.apache.lucene.analysis.en.EnglishAnalyzer;
-import org.apache.lucene.analysis.en.EnglishPossessiveFilter;
+import org.apache.lucene.analysis.en.*;
 import org.apache.lucene.analysis.miscellaneous.SetKeywordMarkerFilter;
 import org.apache.lucene.analysis.snowball.SnowballFilter;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -37,13 +36,12 @@ public class MyCustomAnalyzer extends StopwordAnalyzerBase {
         result = new EnglishPossessiveFilter(result);
         result = new LowerCaseFilter(result);
         result = new StopFilter(result, this.stopwords);
-//        result = new SnowballFilter(result)
+        result = new EnglishMinimalStemFilter(result);
+        result = new KStemFilter(result);
         if (!this.stemExclusionSet.isEmpty()) {
             result = new SetKeywordMarkerFilter((TokenStream)result, this.stemExclusionSet);
         }
-
         result = new SnowballFilter(result, new EnglishStemmer());
-//        result = new PorterStemFilter((TokenStream)result);
         return new TokenStreamComponents(source, result);
     }
 
@@ -58,7 +56,6 @@ public class MyCustomAnalyzer extends StopwordAnalyzerBase {
 
         private DefaultSetHolder() {
         }
-
         static {
             DEFAULT_STOP_SET = StandardAnalyzer.STOP_WORDS_SET;
         }

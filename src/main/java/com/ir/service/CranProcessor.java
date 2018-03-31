@@ -33,16 +33,16 @@ public class CranProcessor {
 
         IndexReader reader = DirectoryReader.open(config.getIndex());
         IndexSearcher searcher = new IndexSearcher(reader);
-
-        // tried filtering out source and author - try again
         List<String> fields = reader.document(1).getFields()
                 .stream()
                 .map(IndexableField::name)
                 .collect(Collectors.toList());
 
         Map<String, Float> boosts = new HashMap<>();
-        boosts.put("title", 0.5f);
-        boosts.put("content", 10f);
+        boosts.put("title", 0.1f);
+        boosts.put("content", 18f);
+        boosts.put("summary", 0.8f);
+        boosts.put("date", 0.008f);
 
         searcher.setSimilarity(config.getSimilarity());
 
@@ -52,13 +52,11 @@ public class CranProcessor {
 
         for (CranQuery cranQuery: queryList) {
             System.out.println("Query: " + cranQuery.getQuery());
-            MultiFieldQueryParser parser = new MultiFieldQueryParser(new String[] {"title", "content"}, config.getAnalyzer(), boosts);
+            MultiFieldQueryParser parser = new MultiFieldQueryParser(new String[] {"title", "content", "date", "summary"}, config.getAnalyzer(), boosts);
             Query query = parser.parse(cranQuery.getQuery());
             TopDocs results = searcher.search(query, HITS_PER_PAGE);
             ScoreDoc[] hits = results.scoreDocs;
-            // float hitMax = Arrays.stream(hits).map(hit -> hit.score).max(Comparator.naturalOrder()).get();
             for (int i=0; i< hits.length; i++) {
-                // int normalized = (int)((hits[i].score / hitMax) * 5f);
                 Document doc = searcher.doc(hits[i].doc);
                 String num = doc.get("id");
                 String out = String.format(cranQuery.getQueryId() + " Q0 %s %s " + hits[i].score + " default", num, i+1);
@@ -68,27 +66,5 @@ public class CranProcessor {
 
         System.out.println("output written to " + path);
     }
-
-    /*
-
-    public static void writeNewRel(String readFile, String writeFile) throws IOException, ParseException, FileNotFoundException {
-        String readPath =
-                "/Users/apple/projects/CS7IS3-information-retrieval/assignment1/lucenedemo/src/main/resources/cranfield-collection/cran/cranqrel";
-
-        Path writePath =
-                Paths.get("/Users/apple/projects/CS7IS3-information-retrieval/assignment1/lucenedemo/output/crantrecrel");
-
-        Files.write(writePath, "".getBytes());
-
-        try (BufferedReader br = new BufferedReader(new FileReader(readPath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                Files.write(writePath, (line.replaceFirst(" ", " 0 ") + System.lineSeparator()).getBytes(UTF_8), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-            }
-
-        }
-    }
-
-    */
 
 }

@@ -12,15 +12,18 @@ public class NewsModel {
 
     private String date;
 
+    private String summary;
+
     public NewsModel() {
         super();
     }
 
-    public NewsModel(String docNo, String title, String content, String date) {
+    public NewsModel(String docNo, String title, String content, String date, String summary) {
         this.docNo = docNo;
         this.title = title;
         this.content = content;
         this.date = date;
+        this.summary = summary;
     }
 
     public String getDocNo() {
@@ -51,9 +54,13 @@ public class NewsModel {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDate(String date) { this.date = date; }
+
+    public String getSummary() {
+        return summary;
     }
+
+    public void setSummary(String summary) { this.summary = summary; }
 
     @Override
     public String toString() {
