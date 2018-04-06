@@ -39,10 +39,10 @@ public class CranProcessor {
                 .collect(Collectors.toList());
 
         Map<String, Float> boosts = new HashMap<>();
-        boosts.put("title", 0.1f);
-        boosts.put("content", 18f);
-        boosts.put("summary", 0.8f);
-        boosts.put("date", 0.008f);
+            boosts.put("title", 0.1f);
+            boosts.put("content", 20f);
+            boosts.put("summary", 0.8f);
+//        boosts.put("date", 0.008f);
 
         searcher.setSimilarity(config.getSimilarity());
 
@@ -54,6 +54,7 @@ public class CranProcessor {
             System.out.println("Query: " + cranQuery.getQuery());
             MultiFieldQueryParser parser = new MultiFieldQueryParser(new String[] {"title", "content", "date", "summary"}, config.getAnalyzer(), boosts);
             Query query = parser.parse(cranQuery.getQuery());
+            System.out.println("Q：" + query);
             TopDocs results = searcher.search(query, HITS_PER_PAGE);
             ScoreDoc[] hits = results.scoreDocs;
             for (int i=0; i< hits.length; i++) {

@@ -35,6 +35,7 @@ public class CranConfig {
         analyzer = new MyCustomAnalyzer();
         index = new SimpleFSDirectory(Paths.get(indexPath));
         config = new IndexWriterConfig(analyzer);
+        config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
         similarity = new BM25Similarity();
         config.setSimilarity(similarity);
     }

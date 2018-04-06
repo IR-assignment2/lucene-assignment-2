@@ -1,13 +1,19 @@
 package com.ir.analyzers;
 
 import org.apache.lucene.analysis.*;
+import org.apache.lucene.analysis.core.FlattenGraphFilter;
 import org.apache.lucene.analysis.en.*;
 import org.apache.lucene.analysis.miscellaneous.SetKeywordMarkerFilter;
 import org.apache.lucene.analysis.snowball.SnowballFilter;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.standard.StandardFilter;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
+import org.apache.lucene.wordnet.SynonymTokenFilter;
 import org.tartarus.snowball.ext.EnglishStemmer;
+import org.apache.lucene.wordnet.SynonymMap;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class MyCustomAnalyzer extends StopwordAnalyzerBase {
 
@@ -33,6 +39,13 @@ public class MyCustomAnalyzer extends StopwordAnalyzerBase {
     protected TokenStreamComponents createComponents(String fieldName) {
         Tokenizer source = new StandardTokenizer();
         TokenStream result = new StandardFilter(source);
+        SynonymMap synonymMap;
+        try {
+            synonymMap = new SynonymMap(new FileInputStream("/Users/zen/prolog/wn_s.pl"));
+            result = new SynonymTokenFilter(result, synonymMap, 2);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         result = new EnglishPossessiveFilter(result);
         result = new LowerCaseFilter(result);
         result = new StopFilter(result, this.stopwords);
