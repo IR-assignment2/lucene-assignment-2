@@ -41,7 +41,7 @@ public class MyCustomAnalyzer extends StopwordAnalyzerBase {
         TokenStream result = new StandardFilter(source);
         SynonymMap synonymMap;
         try {
-            synonymMap = new SynonymMap(new FileInputStream("/Users/zen/prolog/wn_s.pl"));
+            synonymMap = new SynonymMap(new FileInputStream("/home/william/prolog/wn_s.pl"));
             result = new SynonymTokenFilter(result, synonymMap, 2);
         } catch (IOException e) {
             e.printStackTrace();
