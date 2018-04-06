@@ -1,11 +1,14 @@
 com/ir/model/CranQuery.class
 com/ir/model/FinancialTimesModel.class
 com/ir/model/Cran.class
+com/ir/analyzers/MyCustomAnalyzer$DefaultSetHolder.class
 com/ir/config/CranConfig.class
 com/ir/model/NewsModel.class
 com/ir/service/CranReader$1.class
 com/ir/CranApp.class
 com/ir/service/CranReader.class
+com/ir/analyzers/MyTextField.class
 com/ir/service/CranProcessor.class
+com/ir/analyzers/MyCustomAnalyzer.class
 com/ir/service/Indexer.class
 com/ir/model/CranRelevance.class
